@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('product_sizes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('size_id');
+            $table->decimal('price_adjustment', 10, 2)->default(0);
             $table->timestamps();
+            
+            // Indexes & Unique
+            $table->index('product_id');
+            $table->index('size_id');
+            $table->unique(['product_id', 'size_id']);
+            
+            // Foreign Keys
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('size_id')->references('id')->on('sizes')->onDelete('cascade');
         });
     }
 
