@@ -6,14 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('order_id');
+            $table->decimal('amount', 10, 2);
+            $table->string('payment_method')->default('COD');
+            $table->string('status')->default('pending');
+            $table->string('transaction_code')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
+            
+            // Indexes
+            $table->index('order_id');
+            $table->index('status');
+            
+            // Foreign Keys
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
