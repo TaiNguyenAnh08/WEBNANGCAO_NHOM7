@@ -123,6 +123,7 @@
             <nav class="hidden md:flex items-center gap-8">
                 @if(auth()->check())
                     @if(auth()->user()->isAdmin())
+                        <a href="{{ route('admin.dashboard') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📊 Dashboard</a>
                         <a href="{{ route('admin.categories.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📁 Danh mục</a>
                         <a href="{{ route('admin.products.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📦 Sản phẩm</a>
                         <a href="{{ route('admin.sizes.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📏 Kích thước</a>

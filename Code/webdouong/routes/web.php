@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -16,6 +17,7 @@ Route::get('/', function () {
 
 // Admin routes - require authentication and admin role
 Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('sizes', SizeController::class);
@@ -34,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard', function () {
     if (auth()->user()->isAdmin()) {
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.dashboard');
     }
     return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
