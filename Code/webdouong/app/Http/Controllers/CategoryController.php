@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', ['categories' => $categories]);
+        return view('admin.categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         Category::create($validated);
 
         // Chuyển hướng về trang danh sách kèm thông báo
-        return redirect()->route('categories.index')->with('success', 'Thêm danh mục thành công!');
+        return redirect()->route('admin.categories.index')->with('success', 'Thêm danh mục thành công!');
     }
 
     /**
@@ -60,7 +60,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.edit', ['category' => $category]);
+        return view('admin.categories.edit', ['category' => $category]);
     }
 
     /**
@@ -78,7 +78,7 @@ class CategoryController extends Controller
         // Cập nhật danh mục
         $category->update($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Cập nhật danh mục thành công!');
+        return redirect()->route('admin.categories.index')->with('success', 'Cập nhật danh mục thành công!');
     }
 
     /**
@@ -89,6 +89,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Xóa danh mục thành công!');
+        return redirect()->route('admin.categories.index')->with('success', 'Xóa danh mục thành công!');
     }
 }

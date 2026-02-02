@@ -123,9 +123,9 @@
             <nav class="hidden md:flex items-center gap-8">
                 @if(auth()->check())
                     @if(auth()->user()->isAdmin())
-                        <a href="{{ route('categories.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📁 Danh mục</a>
-                        <a href="{{ route('products.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📦 Sản phẩm</a>
-                        <a href="{{ route('sizes.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📏 Kích thước</a>
+                        <a href="{{ route('admin.categories.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📁 Danh mục</a>
+                        <a href="{{ route('admin.products.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📦 Sản phẩm</a>
+                        <a href="{{ route('admin.sizes.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📏 Kích thước</a>
                         <a href="{{ route('orders.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">🛒 Đơn hàng</a>
                     @else
                         <a href="{{ route('orders.index') }}" class="text-gray-700 hover:text-green-700 font-medium transition-colors">📋 Đơn hàng của tôi</a>

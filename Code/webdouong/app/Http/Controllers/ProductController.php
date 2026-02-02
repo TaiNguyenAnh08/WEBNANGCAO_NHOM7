@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category')->paginate(10);
-        return view('products.index', ['products' => $products]);
+        return view('admin.products.index', ['products' => $products]);
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $sizes = Size::all();
-        return view('products.create', ['categories' => $categories, 'sizes' => $sizes]);
+        return view('admin.products.create', ['categories' => $categories, 'sizes' => $sizes]);
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductController extends Controller
             $product->sizes()->attach($request->sizes);
         }
 
-        return redirect()->route('products.index')->with('success', 'Thêm sản phẩm thành công!');
+        return redirect()->route('admin.products.index')->with('success', 'Thêm sản phẩm thành công!');
     }
 
     /**
@@ -86,7 +86,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $sizes = Size::all();
         $selectedSizes = $product->sizes->pluck('id')->toArray();
-        return view('products.edit', [
+        return view('admin.products.edit', [
             'product' => $product,
             'categories' => $categories,
             'sizes' => $sizes,
@@ -134,7 +134,7 @@ class ProductController extends Controller
             $product->sizes()->detach();
         }
 
-        return redirect()->route('products.index')->with('success', 'Cập nhật sản phẩm thành công!');
+        return redirect()->route('admin.products.index')->with('success', 'Cập nhật sản phẩm thành công!');
     }
 
     /**
@@ -154,6 +154,6 @@ class ProductController extends Controller
         // Xóa sản phẩm
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Xóa sản phẩm thành công!');
+        return redirect()->route('admin.products.index')->with('success', 'Xóa sản phẩm thành công!');
     }
 }

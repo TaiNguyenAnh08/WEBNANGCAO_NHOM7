@@ -108,7 +108,7 @@
 
                     @if(auth()->check())
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('categories.index') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">📊 Admin</a>
+                            <a href="{{ route('admin.categories.index') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">📊 Admin</a>
                         @endif
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf

@@ -14,15 +14,15 @@ Route::get('/', function () {
     return view('home', compact('categories', 'products'));
 })->name('home');
 
+// Admin routes - require authentication and admin role
+Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
+    Route::resource('categories', CategoryController::class);
+    Route::resource('products', ProductController::class);
+    Route::resource('sizes', SizeController::class);
+});
+
 // Protected routes - require authentication
 Route::middleware('auth')->group(function () {
-    // Admin resources - require is_admin
-    Route::middleware(\App\Http\Middleware\IsAdmin::class)->group(function () {
-        Route::resource('categories', CategoryController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('sizes', SizeController::class);
-    });
-    
     // Orders - accessible by all authenticated users
     Route::resource('orders', OrderController::class);
     

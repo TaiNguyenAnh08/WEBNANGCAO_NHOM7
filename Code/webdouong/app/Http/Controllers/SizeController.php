@@ -14,7 +14,7 @@ class SizeController extends Controller
     public function index()
     {
         $sizes = Size::paginate(10);
-        return view('sizes.index', ['sizes' => $sizes]);
+        return view('admin.sizes.index', ['sizes' => $sizes]);
     }
 
     /**
@@ -23,7 +23,7 @@ class SizeController extends Controller
      */
     public function create()
     {
-        return view('sizes.create');
+        return view('admin.sizes.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class SizeController extends Controller
         // Tạo kích thước mới
         Size::create($validated);
 
-        return redirect()->route('sizes.index')->with('success', 'Thêm kích thước thành công!');
+        return redirect()->route('admin.sizes.index')->with('success', 'Thêm kích thước thành công!');
     }
 
     /**
@@ -59,7 +59,7 @@ class SizeController extends Controller
      */
     public function edit(Size $size)
     {
-        return view('sizes.edit', ['size' => $size]);
+        return view('admin.sizes.edit', ['size' => $size]);
     }
 
     /**
@@ -76,7 +76,7 @@ class SizeController extends Controller
         // Cập nhật kích thước
         $size->update($validated);
 
-        return redirect()->route('sizes.index')->with('success', 'Cập nhật kích thước thành công!');
+        return redirect()->route('admin.sizes.index')->with('success', 'Cập nhật kích thước thành công!');
     }
 
     /**
@@ -91,6 +91,6 @@ class SizeController extends Controller
         // Xóa kích thước
         $size->delete();
 
-        return redirect()->route('sizes.index')->with('success', 'Xóa kích thước thành công!');
+        return redirect()->route('admin.sizes.index')->with('success', 'Xóa kích thước thành công!');
     }
 }
