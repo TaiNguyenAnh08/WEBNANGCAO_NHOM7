@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,16 +17,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Tạo user test với is_admin = false
-        User::factory()->create([
+        User::create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'hahaha@gmail.com',
+            'password' => Hash::make('hihihi'),
             'is_admin' => false,
         ]);
 
         // Tạo user admin
-        User::factory()->create([
+        User::create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'taidz852005@gmail.com',
+            'password' => Hash::make('Tai12345'),
             'is_admin' => true,
         ]);
 

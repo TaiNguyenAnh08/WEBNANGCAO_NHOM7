@@ -41,13 +41,16 @@ class ProductSeeder extends Seeder
         $categories = Category::all();
         $sizes = Size::all();
 
-        // Tạo 30 sản phẩm
+        // Tạo sản phẩm
         foreach ($productNames as $index => $name) {
+            // Tạo SKU từ index để tránh vấn đề ký tự Việt
+            $sku = 'SKU-' . str_pad($index + 1, 5, '0', STR_PAD_LEFT);
+            
             $product = Product::create([
                 'name' => $name,
                 'description' => $faker->sentence(),
                 'price' => $faker->numberBetween(15000, 50000),
-                'sku' => 'SKU-' . strtoupper(substr($name, 0, 3)) . '-' . str_pad($index + 1, 3, '0', STR_PAD_LEFT),
+                'sku' => $sku,
                 'quantity' => $faker->numberBetween(10, 100),
                 'stock' => $faker->numberBetween(5, 50),
                 'category_id' => $categories->random()->id,
