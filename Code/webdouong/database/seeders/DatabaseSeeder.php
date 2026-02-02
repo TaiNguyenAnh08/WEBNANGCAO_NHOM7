@@ -15,11 +15,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        // Tạo user test với is_admin = false
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'is_admin' => false,
+        ]);
+
+        // Tạo user admin
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'is_admin' => true,
+        ]);
+
+        // Chạy các seeder khác
+        $this->call([
+            CategorySeeder::class,
+            SizeSeeder::class,
+            ProductSeeder::class,
         ]);
     }
 }
