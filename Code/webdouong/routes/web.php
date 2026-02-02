@@ -33,7 +33,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    if (auth()->user()->isAdmin()) {
+        return redirect()->route('admin.categories.index');
+    }
+    return redirect()->route('home');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
