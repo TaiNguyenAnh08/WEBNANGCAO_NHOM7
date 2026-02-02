@@ -15,7 +15,7 @@ Route::get('/', function () {
 })->name('home');
 
 // Admin routes - require authentication and admin role
-Route::prefix('admin')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('products', ProductController::class);
     Route::resource('sizes', SizeController::class);
