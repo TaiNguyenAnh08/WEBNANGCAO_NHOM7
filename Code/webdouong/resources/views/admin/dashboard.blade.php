@@ -68,6 +68,106 @@
         </div>
     </div>
 
+    <!-- Revenue Section -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">💰 Thống Kê Doanh Thu</h2>
+        
+        <!-- Revenue Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <!-- Total Revenue -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg p-6 border-2 border-green-300 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-700 text-sm font-semibold">Tổng Doanh Thu</p>
+                        <p class="text-3xl font-bold text-green-700">{{ number_format($total_revenue, 0, ',', '.') }}đ</p>
+                    </div>
+                    <div class="text-4xl opacity-40">💵</div>
+                </div>
+            </div>
+
+            <!-- Today Revenue -->
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg p-6 border-2 border-blue-300 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-700 text-sm font-semibold">Hôm Nay</p>
+                        <p class="text-3xl font-bold text-blue-700">{{ number_format($today_revenue, 0, ',', '.') }}đ</p>
+                    </div>
+                    <div class="text-4xl opacity-40">📅</div>
+                </div>
+            </div>
+
+            <!-- Week Revenue -->
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl shadow-lg p-6 border-2 border-purple-300 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-700 text-sm font-semibold">Tuần Này</p>
+                        <p class="text-3xl font-bold text-purple-700">{{ number_format($week_revenue, 0, ',', '.') }}đ</p>
+                    </div>
+                    <div class="text-4xl opacity-40">📊</div>
+                </div>
+            </div>
+
+            <!-- Month Revenue -->
+            <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl shadow-lg p-6 border-2 border-orange-300 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-700 text-sm font-semibold">Tháng Này</p>
+                        <p class="text-3xl font-bold text-orange-700">{{ number_format($month_revenue, 0, ',', '.') }}đ</p>
+                    </div>
+                    <div class="text-4xl opacity-40">📈</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Status Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Pending Orders -->
+            <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm font-semibold">Chờ Duyệt</p>
+                        <p class="text-3xl font-bold text-yellow-600">{{ $orders_pending }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Đơn hàng</p>
+                    </div>
+                    <div class="text-4xl opacity-30">⏳</div>
+                </div>
+                <a href="{{ route('orders.index') }}" class="text-sm text-yellow-600 font-semibold hover:text-yellow-700 mt-4 inline-block">
+                    Xem chi tiết →
+                </a>
+            </div>
+
+            <!-- Completed Orders -->
+            <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm font-semibold">Đã Duyệt</p>
+                        <p class="text-3xl font-bold text-green-600">{{ $orders_completed }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Đơn hàng</p>
+                    </div>
+                    <div class="text-4xl opacity-30">✅</div>
+                </div>
+                <a href="{{ route('orders.index') }}" class="text-sm text-green-600 font-semibold hover:text-green-700 mt-4 inline-block">
+                    Xem chi tiết →
+                </a>
+            </div>
+
+            <!-- Cancelled Orders -->
+            <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition-shadow">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-600 text-sm font-semibold">Đã Hủy</p>
+                        <p class="text-3xl font-bold text-red-600">{{ $orders_cancelled }}</p>
+                        <p class="text-xs text-gray-500 mt-1">Đơn hàng</p>
+                    </div>
+                    <div class="text-4xl opacity-30">❌</div>
+                </div>
+                <a href="{{ route('orders.index') }}" class="text-sm text-red-600 font-semibold hover:text-red-700 mt-4 inline-block">
+                    Xem chi tiết →
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Quick Actions -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Add New Product -->

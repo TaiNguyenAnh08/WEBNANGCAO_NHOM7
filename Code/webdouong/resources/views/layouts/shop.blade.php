@@ -82,7 +82,7 @@
         <!-- Header -->
         <header class="glass-effect fixed top-0 left-0 right-0 z-50 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="flex items-center gap-3">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
                     <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center shadow-lg">
                         <span class="text-2xl">🍵</span>
                     </div>
@@ -90,7 +90,7 @@
                         <h1 class="font-display text-xl font-bold gradient-text">ZINGTEA</h1>
                         <p class="text-xs text-gray-500">Hương vị tự nhiên</p>
                     </div>
-                </div>
+                </a>
 
                 <nav class="hidden md:flex items-center gap-8">
                     <a href="#menu" class="text-gray-700 hover:text-green-700 font-medium transition-colors">Menu</a>
@@ -99,12 +99,15 @@
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <button class="relative p-2 text-gray-600 hover:text-green-700 transition-colors" id="cart-btn">
+                    <a href="{{ auth()->check() ? route('checkout.index') : route('login') }}" class="relative p-2 text-gray-600 hover:text-green-700 transition-colors group">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                         <span id="cart-count" class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">0</span>
-                    </button>
+                        <span class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                            {{ auth()->check() ? 'Đi tới checkout' : 'Đăng nhập để thanh toán' }}
+                        </span>
+                    </a>
 
                     @if(auth()->check())
                         <div class="relative group">
@@ -204,45 +207,40 @@
                 </div>
             </div>
         </footer>
+        <!-- Cart Sidebar dùng nếu cần hiển thị cart preview
+        (hiện tại redirect trực tiếp đến checkout page)
+        -->
 
-        <!-- Cart Sidebar -->
-        <div id="cart-sidebar" class="fixed top-0 right-0 w-full max-w-md h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
-            <div class="h-full flex flex-col">
-                <div class="p-6 border-b flex items-center justify-between">
-                    <h3 class="font-display text-xl font-bold">Giỏ hàng</h3>
-                    <button id="close-cart" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="flex-1 overflow-auto p-6" id="cart-items">
-                    <div class="text-center py-12 text-gray-500">
-                        <span class="text-6xl mb-4 block">🛒</span>
-                        <p>Giỏ hàng trống</p>
-                    </div>
-                </div>
-                <div class="p-6 border-t bg-gray-50">
-                    <div class="flex justify-between mb-4">
-                        <span class="font-semibold">Tổng cộng:</span>
-                        <span id="cart-total" class="font-bold text-green-700 text-xl">0đ</span>
-                    </div>
-                    @if(auth()->check())
-                        <form action="{{ route('orders.store') }}" method="POST">
-                            @csrf
-                            <textarea name="customer_notes" placeholder="Ghi chú đơn hàng..." rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 text-sm"></textarea>
-                            <input type="hidden" id="cart-items-json" name="items_json" value="[]">
-                            <button type="submit" class="w-full btn-primary text-white py-4 rounded-full font-semibold text-lg">Thanh toán 💳</button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="block w-full text-center btn-primary text-white py-4 rounded-full font-semibold text-lg">Đăng nhập để thanh toán</a>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div id="cart-overlay" class="fixed inset-0 bg-black/50 z-40 hidden"></div>
     </div>
 
     @vite(['resources/js/app.js'])
+    
+    <script>
+        // Dropdown menu - giữ mở lâu hơn
+        document.addEventListener('DOMContentLoaded', function() {
+            const userMenuButton = document.querySelector('.relative.group button');
+            const userDropdown = document.querySelector('.relative.group > div');
+            
+            if (userMenuButton && userDropdown) {
+                let closeTimeout;
+                
+                // Khi hover button hoặc dropdown
+                const container = userMenuButton.parentElement;
+                container.addEventListener('mouseenter', function() {
+                    clearTimeout(closeTimeout);
+                    userDropdown.classList.remove('hidden');
+                    userDropdown.classList.add('block');
+                });
+                
+                // Khi rời chuột: đợi 2 giây rồi tắt
+                container.addEventListener('mouseleave', function() {
+                    closeTimeout = setTimeout(function() {
+                        userDropdown.classList.add('hidden');
+                        userDropdown.classList.remove('block');
+                    }, 2000);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

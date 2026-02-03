@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -26,8 +27,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware
 
 // Protected routes - require authentication
 Route::middleware('auth')->group(function () {
+    // Checkout
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::get('/checkout/confirm/{order}', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
+    
     // Orders - accessible by all authenticated users
     Route::resource('orders', OrderController::class);
+    Route::post('orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve')->middleware(\App\Http\Middleware\IsAdmin::class);
     
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

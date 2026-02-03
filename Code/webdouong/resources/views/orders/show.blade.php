@@ -57,7 +57,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($order->orderItems as $item)
+          @foreach($order->items as $item)
             <tr>
               <td class="font-semibold text-gray-800">{{ $item->product->name }}</td>
               <td class="text-gray-600">{{ $item->size->name }}</td>

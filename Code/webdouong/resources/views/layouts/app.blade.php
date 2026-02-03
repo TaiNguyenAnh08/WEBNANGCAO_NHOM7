@@ -110,7 +110,7 @@
     <div class="h-full w-full flex flex-col">
         <!-- Header -->
         <header class="bg-white shadow-md px-8 py-4 flex items-center justify-between sticky top-0 z-50">
-            <div class="flex items-center gap-4">
+            <a href="{{ route('home') }}" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
                 <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center shadow-lg">
                     <span class="text-2xl">🍵</span>
                 </div>
@@ -118,7 +118,7 @@
                     <h1 class="font-bold text-lg gradient-text">ZINGTEA</h1>
                     <p class="text-xs text-gray-500">Quản lý cửa hàng</p>
                 </div>
-            </div>
+            </a>
 
             <nav class="hidden md:flex items-center gap-8">
                 @if(auth()->check())
