@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'ZINGTEA') - Beverage Shop</title>
+    <title>@yield('title', 'ZINGTEA') - ZINGTEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -146,7 +146,8 @@
                             </div>
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">🔐 Đăng nhập</a>
+                        <a href="{{ route('login') }}" class="px-4 py-2 text-green-700 hover:bg-green-50 rounded-full font-semibold text-sm transition-colors border-2 border-green-700">🔐 Đăng nhập</a>
+                        <a href="{{ route('register') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">📝 Đăng ký</a>
                     @endif
 
                     <button class="md:hidden p-2 text-gray-600">

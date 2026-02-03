@@ -10,9 +10,23 @@ use App\Http\Controllers\CheckoutController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
-Route::get('/', function () {
+Route::get('/', function (Illuminate\Http\Request $request) {
     $categories = \App\Models\Category::all();
-    $products = \App\Models\Product::all();
+    $query = \App\Models\Product::where('is_active', true);
+    
+    // Search by name
+    if ($request->has('search') && $request->search != '') {
+        $search = $request->search;
+        $query->where('name', 'LIKE', "%{$search}%");
+    }
+    
+    // Filter by category
+    if ($request->has('category') && $request->category != '') {
+        $query->where('category_id', $request->category);
+    }
+    
+    $products = $query->get();
+    
     return view('home', compact('categories', 'products'));
 })->name('home');
 
@@ -40,6 +54,22 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// API route for product search suggestions
+Route::get('/api/products/search', function (Illuminate\Http\Request $request) {
+    $search = $request->query('q', '');
+    if (strlen($search) < 2) {
+        return response()->json([]);
+    }
+    
+    $products = \App\Models\Product::where('is_active', true)
+        ->where('name', 'LIKE', "%{$search}%")
+        ->select('id', 'name')
+        ->limit(8)
+        ->get();
+    
+    return response()->json($products);
 });
 
 Route::get('/dashboard', function () {

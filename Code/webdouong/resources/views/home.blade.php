@@ -1,5 +1,5 @@
 @extends('layouts.shop')
-@section('title', 'Cửa hàng')
+@section('title', 'ZINGTEA')
 
 @section('content')
 <!-- Hero Section -->
@@ -17,18 +17,54 @@
     </div>
 </div>
 
-<!-- Category Filter -->
+<!-- Search & Filter Section -->
 <div class="max-w-7xl mx-auto px-4 py-12">
-    <div class="flex flex-wrap gap-3 justify-center mb-12" id="category-filters">
-        <button class="category-btn active px-6 py-2 rounded-full border-2 border-green-700 text-green-700 font-semibold transition-all" data-category="all">
-            Tất cả
-        </button>
-        @foreach($categories as $category)
-        <button class="category-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-700 font-semibold transition-all" data-category="{{ $category->id }}">
-            {{ $category->name }}
-        </button>
-        @endforeach
+    <!-- Search Box with Autocomplete -->
+    <div class="mb-8">
+        <form id="search-form" method="GET" action="{{ route('home') }}" class="mb-6">
+            <div class="relative">
+                <input 
+                    type="text" 
+                    id="search-input"
+                    name="search" 
+                    placeholder="🔍 Tìm kiếm sản phẩm..." 
+                    value="{{ request('search') }}"
+                    class="w-full px-6 py-4 rounded-xl border-2 border-gray-300 focus:border-green-600 focus:outline-none text-lg shadow-lg"
+                    autocomplete="off"
+                >
+                <div id="search-suggestions" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-lg border-2 border-gray-200 hidden z-50">
+                    <!-- Suggestions will be inserted here -->
+                </div>
+            </div>
+        </form>
     </div>
+
+    <!-- Category Filter -->
+    <form id="filter-form" method="GET" action="{{ route('home') }}" class="mb-12">
+        <input type="hidden" id="category-input" name="category" value="{{ request('category', '') }}">
+        <input type="hidden" name="search" value="{{ request('search') }}">
+        
+        <div class="flex flex-wrap gap-3 justify-center" id="category-filters">
+            <button 
+                type="button" 
+                class="category-btn active px-6 py-2 rounded-full border-2 border-green-700 text-green-700 font-semibold transition-all hover:bg-green-700 hover:text-white" 
+                data-category="all"
+                onclick="filterByCategory('all')"
+            >
+                Tất cả
+            </button>
+            @foreach($categories as $category)
+            <button 
+                type="button" 
+                class="category-btn px-6 py-2 rounded-full border-2 border-gray-300 text-gray-700 font-semibold transition-all hover:border-green-700 hover:text-green-700 {{ request('category') == $category->id ? 'active bg-green-700 text-white border-green-700' : '' }}" 
+                data-category="{{ $category->id }}"
+                onclick="filterByCategory({{ $category->id }})"
+            >
+                {{ $category->name }}
+            </button>
+            @endforeach
+        </div>
+    </form>
 </div>
 
 <!-- Products Grid -->
@@ -280,6 +316,75 @@
     document.getElementById('scroll-menu').addEventListener('click', () => {
         document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
     });
+
+    // Search with autocomplete
+    const searchInput = document.getElementById('search-input');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    let searchTimeout;
+
+    searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
+        console.log('Search query:', query);
+
+        if (query.length < 2) {
+            searchSuggestions.classList.add('hidden');
+            return;
+        }
+
+        searchTimeout = setTimeout(() => {
+            const url = `/api/products/search?q=${encodeURIComponent(query)}`;
+            console.log('Fetching:', url);
+            
+            fetch(url)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Search results:', data);
+                    
+                    if (data.length === 0) {
+                        searchSuggestions.classList.add('hidden');
+                        return;
+                    }
+
+                    let html = '';
+                    data.forEach(product => {
+                        html += `
+                            <div class="px-6 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0" onclick="selectProduct('${product.name}')">
+                                <p class="font-semibold text-gray-800">${product.name}</p>
+                            </div>
+                        `;
+                    });
+
+                    searchSuggestions.innerHTML = html;
+                    searchSuggestions.classList.remove('hidden');
+                })
+                .catch(error => console.error('Search error:', error));
+        }, 300);
+    });
+
+    // Select product from suggestions
+    window.selectProduct = function(productName) {
+        document.getElementById('search-input').value = productName;
+        document.getElementById('search-suggestions').classList.add('hidden');
+        document.getElementById('search-form').submit();
+    };
+
+    // Close suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#search-input') && !e.target.closest('#search-suggestions')) {
+            document.getElementById('search-suggestions').classList.add('hidden');
+        }
+    });
+
+    // Category filter
+    window.filterByCategory = function(categoryId) {
+        const input = document.getElementById('category-input');
+        input.value = categoryId === 'all' ? '' : categoryId;
+        document.getElementById('filter-form').submit();
+    };
 
     // Initialize cart on page load
     updateCart();
