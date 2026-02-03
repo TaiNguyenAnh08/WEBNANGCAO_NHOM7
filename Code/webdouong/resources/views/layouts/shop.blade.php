@@ -107,13 +107,41 @@
                     </button>
 
                     @if(auth()->check())
-                        @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.categories.index') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">📊 Admin</a>
-                        @endif
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
-                            @csrf
-                            <button type="submit" class="px-4 py-2 rounded-full font-semibold text-sm border-2 border-green-700 text-green-700 hover:bg-green-50 transition-colors">🚪 Đăng xuất</button>
-                        </form>
+                        <div class="relative group">
+                            <button class="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-green-700 text-green-700 hover:bg-green-50 transition-colors font-semibold text-sm">
+                                👤 {{ auth()->user()->name }}
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl hidden group-hover:block z-50 border-2 border-gray-200">
+                                <div class="p-3 border-b border-gray-200">
+                                    <p class="text-sm font-semibold text-gray-800">{{ auth()->user()->name }}</p>
+                                    <p class="text-xs text-gray-500">{{ auth()->user()->email }}</p>
+                                </div>
+                                
+                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors text-sm">
+                                    ⚙️ Cài đặt tài khoản
+                                </a>
+                                <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors text-sm">
+                                    📦 Đơn hàng của tôi
+                                </a>
+                                
+                                @if(auth()->user()->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors text-sm border-t border-gray-200">
+                                        📊 Quản lý Admin
+                                    </a>
+                                @endif
+                                
+                                <form method="POST" action="{{ route('logout') }}" class="block">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors text-sm border-t border-gray-200 font-semibold">
+                                        🚪 Đăng xuất
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     @else
                         <a href="{{ route('login') }}" class="px-4 py-2 btn-primary text-white rounded-full font-semibold text-sm">🔐 Đăng nhập</a>
                     @endif
