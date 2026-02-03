@@ -115,7 +115,7 @@
                     <span class="text-2xl">🍵</span>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg gradient-text">Trà & Cà Phê</h1>
+                    <h1 class="font-bold text-lg gradient-text">ZINGTEA</h1>
                     <p class="text-xs text-gray-500">Quản lý cửa hàng</p>
                 </div>
             </div>

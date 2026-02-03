@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware\IsAdmin::class])->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::resource('categories', CategoryController::class);
+    Route::post('categories/{category}/add-product', [CategoryController::class, 'addProduct'])->name('categories.addProduct');
     Route::resource('products', ProductController::class);
     Route::resource('sizes', SizeController::class);
 });

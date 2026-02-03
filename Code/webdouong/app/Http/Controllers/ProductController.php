@@ -64,6 +64,15 @@ class ProductController extends Controller
             $product->sizes()->attach($request->sizes);
         }
 
+        // Nếu tạo từ trang category show, redirect trở lại category
+        if ($request->has('category_id')) {
+            $category = Category::find($request->category_id);
+            if ($category) {
+                return redirect()->route('admin.categories.show', $category)
+                    ->with('success', 'Thêm sản phẩm mới thành công!');
+            }
+        }
+
         return redirect()->route('admin.products.index')->with('success', 'Thêm sản phẩm thành công!');
     }
 

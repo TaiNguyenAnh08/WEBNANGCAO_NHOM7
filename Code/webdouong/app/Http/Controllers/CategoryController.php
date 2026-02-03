@@ -52,7 +52,9 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $category->load('products');
-        return view('admin.categories.show', ['category' => $category]);
+        $sizes = \App\Models\Size::all();
+        $available_products = \App\Models\Product::where('category_id', '!=', $category->id)->get();
+        return view('admin.categories.show', compact('category', 'sizes', 'available_products'));
     }
 
     /**
@@ -91,5 +93,21 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.categories.index')->with('success', 'Xóa danh mục thành công!');
+    }
+
+    /**
+     * Gán sản phẩm có sẵn vào danh mục
+     * POST /categories/{id}/add-product
+     */
+    public function addProduct(Request $request, Category $category)
+    {
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $product = \App\Models\Product::find($validated['product_id']);
+        $product->update(['category_id' => $category->id]);
+
+        return redirect()->route('admin.categories.show', $category)->with('success', 'Gán sản phẩm thành công!');
     }
 }
