@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Trà & Cà Phê') - Beverage Shop</title>
+    <title>@yield('title', 'ZINGTEA') - Beverage Shop</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +87,7 @@
                         <span class="text-2xl">🍵</span>
                     </div>
                     <div>
-                        <h1 class="font-display text-xl font-bold gradient-text">Trà & Cà Phê</h1>
+                        <h1 class="font-display text-xl font-bold gradient-text">ZINGTEA</h1>
                         <p class="text-xs text-gray-500">Hương vị tự nhiên</p>
                     </div>
                 </div>
@@ -141,7 +141,7 @@
                             <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center">
                                 <span class="text-xl">🍵</span>
                             </div>
-                            <span class="font-display text-xl font-bold">Trà & Cà Phê</span>
+                            <span class="font-display text-xl font-bold">ZINGTEA</span>
                         </div>
                         <p class="text-gray-400 text-sm">Mang đến những trải nghiệm đồ uống tuyệt vời nhất cho bạn.</p>
                     </div>
@@ -157,9 +157,9 @@
                     <div>
                         <h5 class="font-semibold mb-4">Liên hệ</h5>
                         <ul class="space-y-2 text-gray-400 text-sm">
-                            <li>📍 123 Nguyễn Huệ, Q.1, TP.HCM</li>
-                            <li>📞 1900 1234</li>
-                            <li>✉️ hello@tracaphe.vn</li>
+                            <li>📍 Đại học Phenikaa</li>
+                            <li>📞 0866698296</li>
+                            <li>✉️ taidz852005@gmail.com</li>
                         </ul>
                     </div>
                     <div>
@@ -172,7 +172,7 @@
                     </div>
                 </div>
                 <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-                    <p>© 2024 Trà & Cà Phê. Tất cả quyền được bảo lưu.</p>
+                    <p>© ZINGTEA - Đem vị trà đến với người Việt</p>
                 </div>
             </div>
         </footer>

@@ -194,7 +194,7 @@
                     <div>
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-xl">🍵</span>
-                            <span class="font-bold text-lg">Trà & Cà Phê</span>
+                            <span class="font-bold text-lg">ZINGTEA</span>
                         </div>
                         <p class="text-gray-400 text-sm">Mang đến những trải nghiệm đồ uống tuyệt vời nhất cho bạn.</p>
                     </div>
@@ -209,9 +209,9 @@
                     <div>
                         <h5 class="font-semibold mb-3">Liên hệ</h5>
                         <ul class="space-y-2 text-gray-400 text-sm">
-                            <li>📍 123 Nguyễn Huệ, Q.1, TP.HCM</li>
-                            <li>📞 1900 1234</li>
-                            <li>✉️ hello@tracaphe.vn</li>
+                            <li>📍 Đại học Phenikaa</li>
+                            <li>📞 0866698296</li>
+                            <li>✉️ taidz852005@gmail.com</li>
                         </ul>
                     </div>
                     <div>
@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <div class="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
-                    <p>© 2024 Trà & Cà Phê. Tất cả quyền được bảo lưu.</p>
+                    <p>© ZINGTEA - Đem vị trà đến với người Việt</p>
                 </div>
             </div>
         </footer>

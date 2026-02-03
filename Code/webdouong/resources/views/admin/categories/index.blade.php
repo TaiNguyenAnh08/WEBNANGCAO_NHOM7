@@ -51,6 +51,9 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 flex gap-3">
+                            <a href="{{ route('admin.categories.show', $category) }}" class="px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 transition-colors text-sm">
+                                👁️ Xem
+                            </a>
                             <a href="{{ route('admin.categories.edit', $category) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-lg font-semibold hover:bg-yellow-600 transition-colors text-sm">
                                 ✏️ Sửa
                             </a>
