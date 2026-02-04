@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Submit form - đảm bảo cart data được gửi
+// Submit form - đảm bảo cart data được gửi và disable button
 document.getElementById('checkout-form').addEventListener('submit', function(e) {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     console.log('Form submit - Cart data:', cart);
@@ -240,6 +240,21 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
     const cartDataInput = document.getElementById('cart_data');
     cartDataInput.value = JSON.stringify(cart);
     console.log('Cart data input set to:', cartDataInput.value);
+    
+    // Disable submit button để tránh double submit
+    const submitButton = this.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = '⏳ Đang xử lý...';
+    submitButton.style.opacity = '0.6';
+    submitButton.style.cursor = 'not-allowed';
+    
+    // Set timeout để prevent spam click
+    setTimeout(() => {
+        submitButton.disabled = false;
+        submitButton.textContent = '💳 Thanh Toán';
+        submitButton.style.opacity = '1';
+        submitButton.style.cursor = 'pointer';
+    }, 3000);
 });
 </script>
 @endsection

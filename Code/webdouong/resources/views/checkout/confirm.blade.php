@@ -182,34 +182,6 @@
                         </div>
                     </div>
 
-                    <!-- Next Steps -->
-                    <div class="mt-6">
-                        <h3 class="font-bold text-gray-800 mb-4">📝 Bước Tiếp Theo</h3>
-                        <div class="space-y-3 text-sm">
-                            <div class="flex gap-3">
-                                <div class="text-green-600 font-bold text-lg">1</div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Kiểm Tra Thông Tin</p>
-                                    <p class="text-gray-600 text-xs">Xem lại địa chỉ giao hàng</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="text-green-600 font-bold text-lg">2</div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Chờ Xác Nhận</p>
-                                    <p class="text-gray-600 text-xs">Chúng tôi sẽ liên hệ sớm</p>
-                                </div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="text-green-600 font-bold text-lg">3</div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Nhận Hàng</p>
-                                    <p class="text-gray-600 text-xs">Trong 3-5 ngày làm việc</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Action Buttons -->
                     <div class="mt-8 space-y-3">
                         <a href="{{ route('orders.show', $order) }}" class="w-full text-center block px-4 py-3 btn-primary text-white rounded-lg font-semibold hover:shadow-lg transition-all">

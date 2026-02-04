@@ -48,17 +48,46 @@ class CheckoutController extends Controller
             $cartJson = $validated['cart_data'];
             $cart = json_decode($cartJson, true);
             
+            if (empty($cart)) {
+                return back()->with('error', 'Giỏ hàng trống!');
+            }
+
+            // Kiểm tra duplicate order trong 5 giây cuối cùng
+            // Nếu user vừa tạo đơn giống nhau → skip
+            $lastOrder = Order::where('user_id', auth()->id())
+                              ->where('created_at', '>=', now()->subSeconds(5))
+                              ->first();
+            
+            if ($lastOrder) {
+                // Kiểm tra cart giống nhau không
+                $lastCart = $lastOrder->items->map(function($item) {
+                    return [
+                        'product_id' => $item->product_id,
+                        'quantity' => $item->quantity,
+                    ];
+                })->toArray();
+                
+                $currentCart = array_map(function($item) {
+                    return [
+                        'product_id' => $item['product_id'],
+                        'quantity' => $item['quantity'],
+                    ];
+                }, $cart);
+                
+                if ($lastCart === $currentCart) {
+                    // Đây là duplicate order
+                    return redirect()->route('checkout.confirm', ['order' => $lastOrder->id])
+                        ->with('warning', 'Đơn hàng này đã được tạo!');
+                }
+            }
+
             // Log để debug
             \Log::info('Checkout store called', [
                 'user_id' => auth()->id(),
                 'payment_method' => $validated['payment_method'],
                 'cart_count' => count($cart),
-                'cart_data' => $cart,
+                'timestamp' => now(),
             ]);
-
-            if (empty($cart)) {
-                return back()->with('error', 'Giỏ hàng trống!');
-            }
 
             // Tạo đơn hàng
             $order = Order::create([
